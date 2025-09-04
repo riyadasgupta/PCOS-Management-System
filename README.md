@@ -19,6 +19,9 @@ A full-stack web application to help manage Polycystic Ovary Syndrome (PCOS) pat
 - Doctor appointment scheduling by specialization
 - User authentication and protected routes
 - ML-powered risk prediction for PCOS
+- Note on Machine Learning Module
+  
+  The machine learning components for PCOS risk prediction are currently under development and will be integrated soon. Stay tuned for updates and enhancements.
 - Responsive UI using Material-UI components
 
 ---
@@ -78,8 +81,7 @@ REACT_APP_API_URL=http://localhost:5000/api
 - Track symptoms, workout and diet preferences
 - Schedule appointments
 - View ML predictions and reports
-  Note on Machine Learning Module
-The machine learning components for PCOS risk prediction are currently under development and will be integrated soon. Stay tuned for updates and enhancements.
+  
 
 
 
