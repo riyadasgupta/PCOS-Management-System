@@ -1,0 +1,78 @@
+.main-bg {
+  background: #f5f8fe;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.header {
+  background: linear-gradient(90deg, #2596be, #64b3f4);
+  color: #fff;
+  padding: 30px 0 20px 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.header .container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header nav {
+  margin-top: 12px;
+}
+
+.header nav a {
+  color: #fff;
+  margin: 0 20px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.hero {
+  padding: 32px;
+  background: #e7f3fa;
+  text-align: center;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero h2 {
+  margin-bottom: 10px;
+  color: #1c2746;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  width: 80%;
+  margin: 40px auto;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(38, 50, 56, 0.07);
+  padding: 32px;
+  border-radius: 10px;
+  flex: 1 1 350px;
+  min-width: 350px;
+  max-width: 450px;
+  margin-bottom: 20px;
+}
+
+.footer {
+  background: #2596be;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  margin-top: 50px;
+  border-radius: 0 0 8px 8px;
+}
