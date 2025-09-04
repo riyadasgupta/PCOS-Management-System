@@ -1,0 +1,16 @@
+const mongoose = require('mongoose');
+
+const DoctorSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  specialty: { type: String, required: true },
+  qualifications: String,
+  experienceYears: Number,
+  location: String,
+  consultationFee: Number,
+  availableSlots: [Date],  // Array of dates/times doctor is available
+  contactEmail: String,
+  phone: String,
+  bio: String
+});
+
+module.exports = mongoose.model('Doctor', DoctorSchema);
