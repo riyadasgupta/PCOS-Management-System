@@ -1,0 +1,32 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# Script files should always use LF endings
+*.js     text eol=lf
+*.jsx    text eol=lf
+*.ts     text eol=lf
+*.tsx    text eol=lf
+*.json   text eol=lf
+*.css    text eol=lf
+*.scss   text eol=lf
+*.html   text eol=lf
+
+# Markdown and documentation files
+*.md     text eol=lf
+*.txt    text eol=lf
+
+# Shell scripts use LF endings
+*.sh     text eol=lf
+
+# Ignore binary files from any end-of-line normalization
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.woff   binary
+*.woff2  binary
+*.ttf    binary
+*.eot    binary
+
+# Node modules and environment files should be ignored by Git entirely (add to .gitignore)
