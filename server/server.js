@@ -13,16 +13,16 @@ app.use(cors());
 app.use(express.json());
 
 // Import routes
-const usersRoutes = require('./routes/users');          // not 'users'
-const doctorsRoutes = require('./routes/doctors');      // not 'doctors'
+const usersRouter = require('./routes/users');
+const doctorRoutes = require('./routes/doctor');      // not 'doctors'
 const appointmentsRoutes = require('./routes/appointments');
 const authRoutes = require('./routes/auth');
 
 
 
 // Use routes
-app.use('/api/users', usersRoutes);
-app.use('/api/doctors', doctorsRoutes);
+app.use('/api/users', usersRouter);
+app.use('/api/doctor', doctorRoutes);
 app.use('/api/appointments', appointmentsRoutes);
 app.use('/api/auth', authRoutes);
 

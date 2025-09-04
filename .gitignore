@@ -1,5 +1,64 @@
-/node_modules
-/.env
+# =========================
+# General
+# =========================
+
+# Node modules for all projects
+/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+
+# MacOS system files
+.DS_Store
+
+# Editor and IDE folders
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Build output folders
 /build
 /dist
-/.venv
+
+# Coverage reports
+/coverage
+
+# =========================
+# Frontend (React) specific
+# =========================
+
+client/pcos/node_modules/
+client/pcos/build/
+client/pcos/.pnp.*
+client/pcos/.cache
+
+# Frontend env files
+client/pcos/.env
+client/pcos/.env.local
+client/pcos/.env.*.local
+
+# =========================
+# Backend (Node.js) specific
+# =========================
+
+server/node_modules/
+server/build/
+server/dist/
+
+# Backend logs and env
+server/*.log
+server/.env
+server/.env.local
+server/.env.*.local
