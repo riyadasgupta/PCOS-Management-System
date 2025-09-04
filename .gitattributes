@@ -1,7 +1,7 @@
 # Auto-detect text files and normalize line endings
 * text=auto
 
-# Script files always use LF endings
+# Force LF for common code and script files
 *.js     text eol=lf
 *.jsx    text eol=lf
 *.ts     text eol=lf
@@ -11,14 +11,14 @@
 *.scss   text eol=lf
 *.html   text eol=lf
 
-# Markdown and text files should use LF
+# Markdown and text files with LF endings
 *.md     text eol=lf
 *.txt    text eol=lf
 
-# Shell scripts use LF endings
+# Shell scripts with LF
 *.sh     text eol=lf
 
-# Mark binary files so Git does not attempt merges or convert line endings
+# Binary files no line ending conversion
 *.png    binary
 *.jpg    binary
 *.jpeg   binary
