@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from './components/AuthContext'; // Adjust path if needed
 import { AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { SpecialtyProvider } from './contexts/SpecialtyContext';
@@ -10,8 +11,11 @@ import PrivateRoute from "./components/PrivateRoute";
 import BookAppointmentPage from './pages/BookAppointmentPage';
 import DoctorCard from './components/DoctorCard';
 import AppointmentForm from './components/AppointmentForm';
+import DemoConsultationPage from './pages/DemoConsultationPage';
 
 function App() {
+  const { user } = useAuth();
+
   return (
     <SpecialtyProvider>
       <Router>
@@ -19,8 +23,14 @@ function App() {
           <AppBar position="static" sx={{ background: "linear-gradient(90deg, #2596be, #64b3f4)" }}>
             <Toolbar>
               <Typography variant="h5" sx={{ flexGrow: 1 }}>
-                PCOS Management System
+                <Box
+                  component="img"
+                  src="/logo-circle.png"
+                  alt="Ovionix Logo"
+                  sx={{ height: 80, width: "80", mr: 4, bgcolor: "white", borderRadius: 10 }}
+                />
               </Typography>
+
               <Button color="inherit" component={Link} to="/">
                 Dashboard
               </Button>
@@ -30,8 +40,9 @@ function App() {
               <Button color="inherit" component={Link} to="/profile">
                 Profile
               </Button>
-              
-              <LogoutButton />  {/* Shown when user is logged in */}
+
+              {/* Only show LogoutButton if user is logged in */}
+              {user && <LogoutButton />}
             </Toolbar>
           </AppBar>
 
@@ -69,6 +80,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route path="/demo-consultation" element={<DemoConsultationPage />} />
           </Routes>
 
           <Box sx={{ background: "#2596be", color: "white", mt: 6, p: 2, textAlign: 'center', borderRadius: "0 0 8px 8px" }}>

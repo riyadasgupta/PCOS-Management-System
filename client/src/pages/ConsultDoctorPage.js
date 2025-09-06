@@ -15,30 +15,34 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import { useSpecialty } from "../contexts/SpecialtyContext";
 import { useNavigate } from "react-router-dom";
 
-const doctors = [
-  { name: "Dr. Seema Patel", specialty: "Gynecologist", available: true },
-  { name: "Dr. Aman Sinha", specialty: "Endocrinologist", available: false },
-  { name: "Dr. Rohit Nair", specialty: "Nutritionist", available: true },
-  // ... other doctors
-];
-
 const ConsultDoctorPage = () => {
   const { selectedSpecialty, clearSpecialty } = useSpecialty();
+  const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true);
+    async function fetchDoctors() {
+      try {
+        const res = await fetch('/api/doctor');
+        const data = await res.json();
+        console.log('Doctors fetched:', data); // <--- Debug: See doctor availability here!
+        setDoctors(data);
+      } catch {
+        setDoctors([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchDoctors();
+  }, [selectedSpecialty]);
 
   const filteredDoctors = selectedSpecialty
     ? doctors.filter((doc) => doc.specialty === selectedSpecialty)
     : doctors;
 
-  useEffect(() => {
-    setLoading(true);
-    const loadingTimer = setTimeout(() => setLoading(false), 700); // Simulate loading
-    return () => clearTimeout(loadingTimer);
-  }, [selectedSpecialty]);
-
   const handleBookAppointment = (doctor) => {
-    // Pass doctor info to booking page via route state
     navigate("/book-appointment", { state: { doctor } });
   };
 
@@ -56,14 +60,7 @@ const ConsultDoctorPage = () => {
           )}
         </Stack>
         {loading ? (
-          <Box
-            sx={{
-              minHeight: 200,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+          <Box sx={{ minHeight: 200, display: "flex", justifyContent: "center", alignItems: "center" }}>
             <CircularProgress color="primary" />
           </Box>
         ) : filteredDoctors.length === 0 ? (
@@ -73,19 +70,11 @@ const ConsultDoctorPage = () => {
         ) : (
           <Grid container spacing={4} justifyContent="center" alignItems="stretch" mt={2}>
             {filteredDoctors.map((doc) => (
-              <Grid item xs={12} sm={6} md={4} key={doc.name}>
-                <Card
-                  elevation={3}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    py: 4,
-                    px: 2,
-                    borderRadius: 3,
-                    minHeight: 280,
-                  }}
-                >
+              <Grid item xs={12} sm={6} md={4} key={doc._id}>
+                <Card elevation={3} sx={{
+                  display: "flex", flexDirection: "column", alignItems: "center",
+                  py: 4, px: 2, borderRadius: 3, minHeight: 280
+                }}>
                   <Avatar sx={{ bgcolor: "#2596be", width: 64, height: 64, mb: 2 }}>
                     <LocalHospitalIcon fontSize="large" />
                   </Avatar>

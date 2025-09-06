@@ -1,51 +1,141 @@
-import React from "react";
-import { Container, Typography, Card, CardContent, Avatar, Box, Button } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import { Container, Paper, Typography, Button, CircularProgress, Box, Avatar, Alert } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import EditProfile from '../components/EditProfile';
 
-const user = {
-  name: "Your Name",
-  email: "your@email.com",
-  age: 25,
-  weight: 60,
-  height: 163,
-  avatar: "", // Optionally add URL to profile photo or leave blank for initial letter
-};
+const ProfilePage = () => {
+  const [user, setUser] = useState(null);
+  const [loadingProfile, setLoadingProfile] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-const ProfilePage = () => (
-  <Box sx={{ minHeight: "70vh", background: "#F5F8FE", py: 8 }}>
-    <Container maxWidth="sm">
-      <Card sx={{
-        maxWidth: 420, mx: "auto", borderRadius: 3, boxShadow: 3,
-        textAlign: "center", py: 4, px: 2,
-      }}>
-        <Avatar sx={{ bgcolor: "#2596be", m: "0 auto", width: 72, height: 72, fontSize: 38 }}>
-          {user.avatar ? (
-            <img src={user.avatar} alt="Profile" style={{ width: "100%" }} />
-          ) : (
-            user.name ? user.name[0].toUpperCase() : "A"
-          )}
-        </Avatar>
-        <CardContent>
-          <Typography variant="h6" sx={{ mt: 2, mb: 0.5 }}>
-            {user.name}
-          </Typography>
-          <Typography color="text.secondary" variant="body1" sx={{ mb: 2 }}>
-            {user.email}
-          </Typography>
-          <Box sx={{ textAlign: "center", mb: 2 }}>
-            <Typography variant="body2"><b>Age:</b> {user.age}</Typography>
-            <Typography variant="body2"><b>Weight:</b> {user.weight} kg</Typography>
-            <Typography variant="body2"><b>Height:</b> {user.height} cm</Typography>
-          </Box>
-          <Button
-            variant="contained"
-            sx={{ background: "#2596be", px: 4, mt: 1, fontWeight: 600 }}
-          >
-            Edit Profile
+  useEffect(() => {
+    const fetchProfile = async () => {
+      setLoadingProfile(true);
+      setError('');
+      try {
+        const token = localStorage.getItem('token');
+        const res = await fetch('/api/user/me', {
+          headers: { 'x-auth-token': token }
+        });
+
+        // Handle invalid response (HTML, 404, etc.)
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error('Profile fetch failed. Status:', res.status, 'Response:', errorText);
+          setError('Profile fetch failed: Server responded with error.');
+          setUser(null);
+        } else {
+          try {
+            const data = await res.json();
+            setUser(data);
+          } catch (jsonErr) {
+            const errorText = await res.text();
+            console.error('Profile fetch failed. JSON parse error:', jsonErr, 'Full response:', errorText);
+            setError('Profile fetch failed: Received invalid data from server.');
+            setUser(null);
+          }
+        }
+      } catch (err) {
+        setError('Network error or backend not reachable.');
+        setUser(null);
+      } finally {
+        setLoadingProfile(false);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const handleEditClick = () => setEditing(true);
+
+  const handleSave = async (formData) => {
+    setSaving(true);
+    setError('');
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch('/api/user/me', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': token,
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        console.error('Profile update failed. Status:', res.status, 'Response:', errText);
+        setError('Profile update failed: Server responded with error.');
+        throw new Error('Failed to update profile.');
+      }
+      const updatedUser = await res.json();
+      setUser(updatedUser);
+      setEditing(false);
+      return true;
+    } catch (err) {
+      setError('Could not update profile.');
+      return Promise.reject(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const getInitial = (name) => (name ? name[0].toUpperCase() : '');
+
+  if (loadingProfile) {
+    return (
+      <Container sx={{ minHeight: 450, textAlign: 'center', mt: 4 }}>
+        <CircularProgress />
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container sx={{ minHeight: 450 }}>
+        <Paper sx={{ p: 3, textAlign: 'center' }}>
+          <Alert severity="error">{error}</Alert>
+          <Typography variant="h6" sx={{ mt: 2 }}>Please log in to view your profile.</Typography>
+        </Paper>
+      </Container>
+    );
+  }
+
+  if (!user) {
+    return (
+      <Container sx={{ minHeight: 450, mt: 4 }}>
+        <Paper sx={{ p: 3, textAlign: 'center' }}>
+          <Typography variant="h6">Please log in to view your profile.</Typography>
+          <Button variant="contained" sx={{ mt: 2 }} onClick={() => navigate('/login')}>
+            Login
           </Button>
-        </CardContent>
-      </Card>
+        </Paper>
+      </Container>
+    );
+  }
+
+  if (editing) {
+    return <EditProfile user={user} onSave={handleSave} loading={saving} />;
+  }
+
+  return (
+    <Container sx={{ minHeight: 450 }}>
+      <Paper sx={{ p: 3, textAlign: 'center', maxWidth: 400, mx: 'auto' }}>
+        <Avatar sx={{ bgcolor: "#2596be", mx: 'auto', mb: 2, width: 64, height: 64 }}>
+          {getInitial(user.name)}
+        </Avatar>
+        <Typography variant="h5">{user.name}</Typography>
+        <Typography variant="body1" color="text.secondary">{user.email}</Typography>
+        <Box sx={{ mt: 2, textAlign: 'left' }}>
+          <Typography><b>Age:</b> {user.age}</Typography>
+          <Typography><b>Weight:</b> {user.weight} kg</Typography>
+          <Typography><b>Height:</b> {user.height} cm</Typography>
+        </Box>
+        <Button variant="contained" sx={{ mt: 3 }} onClick={handleEditClick}>EDIT PROFILE</Button>
+      </Paper>
     </Container>
-  </Box>
-);
+  );
+};
 
 export default ProfilePage;

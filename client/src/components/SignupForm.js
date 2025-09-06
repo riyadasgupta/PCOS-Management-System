@@ -23,12 +23,44 @@ const SignupForm = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 360, mx: "auto" }}>
-      <Typography variant="h5" mb={2}>Sign Up</Typography>
+      {/* <Typography variant="h5" mb={2}>Sign Up</Typography> */}
       {error && <Typography color="error" mb={2}>{error}</Typography>}
-      <TextField label="Name" name="name" fullWidth required margin="normal" value={formData.name} onChange={handleChange} />
-      <TextField label="Email" name="email" fullWidth required margin="normal" value={formData.email} onChange={handleChange} />
-      <TextField label="Password" name="password" type="password" fullWidth required margin="normal" value={formData.password} onChange={handleChange} />
-      <Button type="submit" variant="contained" sx={{ mt: 2 }}>Sign Up</Button>
+      <TextField
+        label="Name"
+        name="name"
+        fullWidth
+        required
+        margin="normal"
+        value={formData.name}
+        onChange={handleChange}
+      />
+      <TextField
+        label="Email"
+        name="email"
+        fullWidth
+        required
+        margin="normal"
+        value={formData.email}
+        onChange={handleChange}
+      />
+      <TextField
+        label="Password"
+        name="password"
+        type="password"
+        fullWidth
+        required
+        margin="normal"
+        value={formData.password}
+        onChange={handleChange}
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        fullWidth
+        sx={{ mt: 2, background: "#2596be" }} // Make button match login color!
+      >
+        Sign Up
+      </Button>
     </Box>
   );
 };

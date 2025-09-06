@@ -16,10 +16,11 @@ function Home() {
   return (
     <Box
       sx={{
-        minHeight: "70vh",
+        minHeight: "100vh",
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start", // Start at top
         justifyContent: "center",
+        bgcolor: "#f4f8fc",
       }}
     >
       <Paper
@@ -30,6 +31,7 @@ function Home() {
           mx: "auto",
           textAlign: "center",
           borderRadius: 3,
+          mt: 10, // <- ADDED margin-top for spacing from navbar!
         }}
       >
         <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
@@ -43,7 +45,9 @@ function Home() {
             sx={{ textDecoration: "none", fontWeight: 500, color: "#2596be" }}
             onClick={() => setShowSignup(!showSignup)}
           >
-            {showSignup ? "Already have an account? Log In" : "New user? Sign Up"}
+            {showSignup
+              ? "Already have an account? Log In"
+              : "New user? Sign Up"}
           </Link>
         </Box>
       </Paper>
@@ -52,3 +56,4 @@ function Home() {
 }
 
 export default Home;
+

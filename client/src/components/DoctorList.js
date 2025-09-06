@@ -1,35 +1,61 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, CircularProgress, Typography } from '@mui/material';
-import DoctorCard from './DoctorCard';
+import { Paper, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
 
 const DoctorList = ({ onBook }) => {
-  const [doctors, setDoctors] = useState(null);
+  const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchDoctors = async () => {
+    async function fetchDoctors() {
       try {
-        const res = await fetch('/api/doctors');
+        const res = await fetch('/api/doctor');
         const data = await res.json();
+        console.log('Doctors fetched:', data); // <--- Debug: See doctor availability here!
         setDoctors(data);
-      } catch {
+      } catch (err) {
+        console.error('Failed to load doctors', err);
         setDoctors([]);
+      } finally {
+        setLoading(false);
       }
-    };
+    }
     fetchDoctors();
   }, []);
 
-  if (doctors === null) return <CircularProgress />;
-  if (doctors.length === 0)
-    return <Typography color="text.secondary">No doctors available at the moment.</Typography>;
+  if (loading) return <Typography>Loading doctors...</Typography>;
+  if (doctors.length === 0) return <Typography>No doctors available.</Typography>;
 
   return (
-    <Grid container spacing={2}>
-      {doctors.map((doc) => (
-        <Grid item xs={12} md={4} key={doc._id}>
-          <DoctorCard doctor={doc} onBook={onBook} />
-        </Grid>
-      ))}
-    </Grid>
+    <Paper sx={{ maxHeight: 400, overflow: 'auto', p: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        Available Specialized Doctors
+      </Typography>
+      <List>
+        {doctors.map((doctor) => (
+          <ListItem key={doctor._id} divider>
+            <ListItemText
+              primary={`${doctor.name} (${doctor.specialty})`}
+              secondary={
+                doctor.available
+                  ? `Available | Experience: ${doctor.experienceYears || 'N/A'} years | Fee: ₹${doctor.consultationFee || '-'}`
+                  : `Unavailable | Experience: ${doctor.experienceYears || 'N/A'} years | Fee: ₹${doctor.consultationFee || '-'}`
+              }
+            />
+            <Button
+              variant="contained"
+              disabled={!doctor.available}
+              onClick={() => doctor.available && onBook(doctor)}
+              sx={{
+                background: doctor.available ? "#2596be" : "#cfd8dc",
+                color: doctor.available ? 'white' : "#607d8b"
+              }}
+            >
+              {doctor.available ? "Book Appointment" : "Unavailable"}
+            </Button>
+          </ListItem>
+        ))}
+      </List>
+    </Paper>
   );
 };
 

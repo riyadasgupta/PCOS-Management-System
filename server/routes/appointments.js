@@ -1,36 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const Appointment = require('../models/Appointment');
+const authMiddleware = require('../middleware/auth');
 
-// POST /api/appointments - create appointment
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { patientId, doctorId, appointmentDate, symptoms } = req.body;
-    if (!patientId || !doctorId || !appointmentDate) {
-      return res.status(400).json({ error: 'Missing required fields' });
+    const patientId = req.user.id; // from auth middleware
+    const { doctorId, appointmentDate, symptoms } = req.body;
+
+    if (!doctorId || !appointmentDate) {
+      return res.status(400).json({ error: 'doctorId and appointmentDate are required' });
     }
+
     const appointment = new Appointment({
       patientId,
       doctorId,
       appointmentDate,
       symptoms,
     });
-    await appointment.save();
-    res.status(201).json({ message: 'Appointment booked', appointment });
-  } catch (err) {
-    res.status(500).json({ error: 'Server error creating appointment' });
-  }
-});
 
-// GET /api/appointments?patientId=... - fetch user appointments
-router.get('/', async (req, res) => {
-  try {
-    const { patientId } = req.query;
-    if (!patientId) return res.status(400).json({ error: 'patientId is required' });
-    const appointments = await Appointment.find({ patientId }).populate('doctorId');
-    res.json(appointments);
+    await appointment.save();
+
+    res.status(201).json({ message: 'Appointment booked successfully', appointment });
   } catch (err) {
-    res.status(500).json({ error: 'Server error fetching appointments' });
+    console.error(err);
+    res.status(500).json({ error: 'Server error booking appointment' });
   }
 });
 
