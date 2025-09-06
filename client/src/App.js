@@ -27,7 +27,7 @@ function App() {
                   component="img"
                   src="/logo-circle.png"
                   alt="Ovionix Logo"
-                  sx={{ height: 80, width: "80", mr: 4, bgcolor: "white", borderRadius: 10 }}
+                  sx={{ height: 80, width: "50", mr: 4, bgcolor: "white", borderRadius: 10 }}
                 />
               </Typography>
 
