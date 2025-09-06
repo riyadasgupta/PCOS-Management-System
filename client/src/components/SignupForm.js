@@ -23,7 +23,6 @@ const SignupForm = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ maxWidth: 360, mx: "auto" }}>
-      {/* <Typography variant="h5" mb={2}>Sign Up</Typography> */}
       {error && <Typography color="error" mb={2}>{error}</Typography>}
       <TextField
         label="Name"
@@ -57,7 +56,7 @@ const SignupForm = () => {
         type="submit"
         variant="contained"
         fullWidth
-        sx={{ mt: 2, background: "#2596be" }} // Make button match login color!
+        sx={{ mt: 2, background: "#2596be" }} 
       >
         Sign Up
       </Button>

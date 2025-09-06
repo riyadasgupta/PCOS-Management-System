@@ -5,7 +5,6 @@ const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-// Axios interceptor setup function
 function setupAxiosInterceptors(logout) {
   axios.interceptors.response.use(
     response => response,
@@ -43,8 +42,7 @@ export function AuthProvider({ children }) {
   // Setup Axios interceptor once on mount
   useEffect(() => {
     setupAxiosInterceptors(logout);
-  }, []); // empty deps to run only once
-
+  }, []); 
   const login = (token) => {
     localStorage.setItem("token", token);
     setToken(token);

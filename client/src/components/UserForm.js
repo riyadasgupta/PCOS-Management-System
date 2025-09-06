@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Stack, Paper, Typography, Chip, Autocomplete, Grid } from '@mui/material';
 import axios from 'axios';
-import MedicationInput from './MedicationInput';  // Make sure this component is defined/imported accordingly
+import MedicationInput from './MedicationInput';  
 
 const symptomOptions = [
   "Irregular periods",

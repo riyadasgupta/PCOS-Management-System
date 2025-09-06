@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from './components/AuthContext'; // Adjust path if needed
+import { useAuth } from './components/AuthContext'; 
 import { AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { SpecialtyProvider } from './contexts/SpecialtyContext';

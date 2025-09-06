@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Box, TextField, IconButton, MenuItem, Button, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 
-// List of common medications for dropdown selection including "Not Applicable"
 const medicationOptions = [
-  'Not Applicable',   // Added this option
+  'Not Applicable',   
   'Metformin',
   'Spironolactone',
   'Clomiphene',
@@ -14,7 +13,6 @@ const medicationOptions = [
 ];
 
 const MedicationInput = ({ medications, setMedications }) => {
-  // Ensure at least one input field always
   useEffect(() => {
     if (medications.length === 0) {
       setMedications([{ name: '', dosage: '', startDate: '' }]);

@@ -12,7 +12,7 @@ const DemoConsultationPage = () => {
   }
 
   const handleEnd = () => {
-    navigate('/appointments');  // or wherever your dashboard/bookings page is
+    navigate('/appointments');  
   };
 
   return <DemoConsultation doctor={doctor} onEnd={handleEnd} />;

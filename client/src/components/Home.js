@@ -18,7 +18,7 @@ function Home() {
       sx={{
         minHeight: "100vh",
         display: "flex",
-        alignItems: "flex-start", // Start at top
+        alignItems: "flex-start", 
         justifyContent: "center",
         bgcolor: "#f4f8fc",
       }}
@@ -31,7 +31,7 @@ function Home() {
           mx: "auto",
           textAlign: "center",
           borderRadius: 3,
-          mt: 10, // <- ADDED margin-top for spacing from navbar!
+          mt: 10, 
         }}
       >
         <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>

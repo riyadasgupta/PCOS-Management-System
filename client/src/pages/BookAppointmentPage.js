@@ -6,13 +6,13 @@ import AppointmentForm from '../components/AppointmentForm';
 
 const BookAppointmentPage = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
-  const [bookedDoctor, setBookedDoctor] = useState(null); // Store doctor after successful booking
+  const [bookedDoctor, setBookedDoctor] = useState(null); 
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Debug: log selectedDoctor whenever it changes
+  
   useEffect(() => {
     console.log('Selected Doctor:', selectedDoctor);
   }, [selectedDoctor]);
@@ -47,7 +47,7 @@ const BookAppointmentPage = () => {
         setErrorMessage(data.error || 'Failed to book appointment.');
       } else {
         setBookingSuccess(true);
-        setBookedDoctor(selectedDoctor); // Store doctor who was booked
+        setBookedDoctor(selectedDoctor); 
         setSelectedDoctor(null);
       }
     } catch (err) {

@@ -10,7 +10,7 @@ const DoctorList = ({ onBook }) => {
       try {
         const res = await fetch('/api/doctor');
         const data = await res.json();
-        console.log('Doctors fetched:', data); // <--- Debug: See doctor availability here!
+        console.log('Doctors fetched:', data); 
         setDoctors(data);
       } catch (err) {
         console.error('Failed to load doctors', err);

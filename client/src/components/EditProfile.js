@@ -1,4 +1,3 @@
-// src/components/EditProfile.js
 import React, { useState, useEffect } from 'react';
 import { Container, Paper, TextField, Button, Typography, Snackbar, Alert } from '@mui/material';
 

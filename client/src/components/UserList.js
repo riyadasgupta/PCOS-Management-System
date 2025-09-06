@@ -17,7 +17,6 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
-  // Helper to display medications
   const renderMedications = (medications) => {
     if (!medications || medications.length === 0) return <i>None</i>;
     if (
@@ -44,7 +43,6 @@ const UserList = () => {
     );
   };
 
-  // Helper to display arrays as chips
   const renderChips = (items, labelColor = "success") =>
     items && items.length > 0 ? (
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
