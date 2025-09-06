@@ -14,19 +14,18 @@ const MedicationSchema = new mongoose.Schema({
     ],
     required: true
   },
-  dosage: { type: String, required: false },     // Not required
-  startDate: { type: Date, required: false }     // Not required
+  dosage: { type: String, required: false },     
+  startDate: { type: Date, required: false }     
 });
 
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String }, // removed required:true
-  age: Number,
+  password: { type: String }, 
   weight: Number,
   height: Number,
   symptoms: [String],
-  medications: [MedicationSchema],               // Each medication validated by new schema
+  medications: [MedicationSchema],               
   dietPreferences: [String],
   workoutRoutine: [String],
   createdAt: { type: Date, default: Date.now },

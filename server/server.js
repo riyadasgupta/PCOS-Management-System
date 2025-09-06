@@ -25,8 +25,6 @@ app.use('/api/appointments', appointmentsRoutes);
 app.use('/api/auth', authRoutes);
 
 
-// ADD THIS EXACT LINE for your profile endpoint!
-app.use('/api/user', require('./routes/api/user'));            // Handles /api/user/me
-
+app.use('/api/user', require('./routes/api/user'));            
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

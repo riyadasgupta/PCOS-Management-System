@@ -7,11 +7,11 @@ const DoctorSchema = new mongoose.Schema({
   experienceYears: Number,
   location: String,
   consultationFee: Number,
-  availableSlots: [Date],  // Array of dates/times doctor is available
+  availableSlots: [Date],  
   contactEmail: String,
   phone: String,
   bio: String,
-  available: { type: Boolean, default: true }  // <-- Add this line!
+  available: { type: Boolean, default: true }  
 });
 
 module.exports = mongoose.model('Doctor', DoctorSchema);

@@ -19,7 +19,6 @@ router.get('/me', auth, async (req, res) => {
 router.put('/me', auth, async (req, res) => {
   const { name, email, age, weight, height } = req.body;
   try {
-    // Only update fields that are defined
     const updateFields = {};
     if (name !== undefined) updateFields.name = name;
     if (email !== undefined) updateFields.email = email;
